@@ -30,9 +30,11 @@ For permissions and the most current information about Windows PowerShell for Sh
 
 ### ---------------EXAMPLE-------------
 ```
-C:\PS>$appPrincipal= Get-SPApplicationPrincipal -nameIdentifier $spTrustedIssuer.nameIdentifier - web $site.rootWeb
+C:\PS>$site = Get-SPSite https://sharepoint.contoso.com/
 
-C:\PS>Set-AppPrincipalPermission -appPrincipal $appPrincipal -site $site.rootweb -scope "spweb" -level "WRITE"
+C:\PS>$appPrincipal= Get-SPAppPrincipal -nameIdentifier "00000003-0000-0ff1-ce00-000000000000@f000d000-8d16-42db-81b7-cb578e000ccd" -site $site.rootWeb
+
+C:\PS>Set-AppPrincipalPermission -appPrincipal $appPrincipal -site $site.rootweb -scope "site" -level "WRITE"
 ```
 
 This example sets the Write permission level of  to the SPWeb scope.
@@ -64,7 +66,7 @@ The value is any of the following levels:
 ----Read
 --Write
 --Manage
---Full Control
+--FullControl
 
 ```yaml
 Type: SPCmdletAppPrincipalPermissionKind
@@ -84,11 +86,9 @@ Specifies the scope to which to apply the principal permission.
 
 The value is any of the following scopes:
 
---Farm
---Site collection
---SharePoint Online
---Web
---Documents, List, or Library
+--Sitecollection
+--Site
+--SiteSubscription
 
 ```yaml
 Type: SPCmdletAppPrincipalPermissionScope
@@ -104,7 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -Site
-{{ Fill Site Description}}
+Specifies the SPWebPipeBind. Expects SharePoint Web Object.
 
 ```yaml
 Type: SPWebPipeBind
